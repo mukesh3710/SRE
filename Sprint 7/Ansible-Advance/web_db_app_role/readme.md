@@ -73,3 +73,55 @@ This repository implements an organized and reusable structure for deploying app
 
    [web_server]
    web_host ansible_host=192.168.1.11
+
+---
+
+## Role directory structure
+```plain text
+project/
+├── inventory
+├── host_vars/
+│   ├── db_server.yml
+│   └── web_server.yml
+├── roles/
+│   ├── python/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   │   ├── defaults/
+│   │   │   └── main.yml
+│   │   ├── handlers/
+│   │   │   └── main.yml
+│   │   ├── meta/
+│   │   │   └── main.yml
+│   │   ├── templates/
+│   │   ├── files/
+│   │   └── vars/
+│   │       └── main.yml
+│   ├── mysql_db/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   │   ├── defaults/
+│   │   │   └── main.yml
+│   │   ├── handlers/
+│   │   │   └── main.yml
+│   │   ├── meta/
+│   │   │   └── main.yml
+│   │   ├── templates/
+│   │   ├── files/
+│   │   └── vars/
+│   │       └── main.yml
+│   ├── flask_web/
+│   │   ├── tasks/
+│   │   │   └── main.yml
+│   │   ├── defaults/
+│   │   │   └── main.yml
+│   │   ├── handlers/
+│   │   │   └── main.yml
+│   │   ├── meta/
+│   │   │   └── main.yml
+│   │   ├── templates/
+│   │   ├── files/
+│   │   └── vars/
+│   │       └── main.yml
+└── main_playbook.yml
+```
