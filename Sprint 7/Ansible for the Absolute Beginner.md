@@ -188,3 +188,242 @@ Gather system information using `setup` module.
     - name: Display OS type
       debug:
         msg: "{{ ansible_os_family }}"
+```
+
+## Ansible Playbooks
+
+## What is a Playbook?
+Ansible Playbooks are YAML files used to define a series of tasks that automate complex IT workflows. They describe what needs to be done, on which hosts, and in what order, using human-readable syntax.
+
+### Playbook Format
+- **Hosts**: Specifies the target hosts.
+- **Module**: Defines the task to perform (e.g., copy, service, yum).
+- **Run**: Executes the tasks sequentially.
+
+**Example:**
+```yaml
+- name: Install Apache on web servers
+  hosts: webservers
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+```
+
+---
+
+## Verifying Playbooks
+### Why Do We Need to Verify Playbooks?
+To ensure playbooks are error-free and behave as expected before running them on production systems.
+
+### How to Verify Playbooks in Ansible
+1. **Check Mode**: Tests changes without applying them.
+   ```bash
+   ansible-playbook playbook.yml --check
+   ```
+
+2. **Diff Mode**: Shows differences between current and intended states.
+   ```bash
+   ansible-playbook playbook.yml --diff
+   ```
+
+3. **Syntax Check**: Validates playbook syntax.
+   ```bash
+   ansible-playbook playbook.yml --syntax-check
+   ```
+
+---
+
+## Ansible-lint
+### Why Do We Need ansible-lint?
+To enforce coding standards, catch errors, and improve the quality of playbooks.
+
+### How to Use ansible-lint
+Install it using pip:
+```bash
+pip install ansible-lint
+```
+Run ansible-lint on a playbook:
+```bash
+ansible-lint playbook.yml
+```
+
+---
+
+## Ansible Conditionals
+### Conditional - `when`
+Used to execute tasks based on conditions.
+
+**Example:**
+```yaml
+- name: Install httpd only on RedHat systems
+  yum:
+    name: httpd
+    state: present
+  when: ansible_facts['os_family'] == 'RedHat'
+```
+
+### Operators
+- **`or`**: Used for logical OR.
+- **`and`**: Used for logical AND.
+
+### Conditionals in Loops
+```yaml
+- name: Install packages conditionally
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+    - nginx
+  when: ansible_facts['os_family'] == 'RedHat'
+```
+
+### Conditionals & Register
+```yaml
+- name: Check service status
+  shell: systemctl status httpd
+  register: httpd_status
+
+- name: Restart service if stopped
+  service:
+    name: httpd
+    state: restarted
+  when: httpd_status.rc != 0
+```
+
+---
+
+## Ansible Loops
+### Loops - Visualize
+Use loops for repetitive tasks.
+```yaml
+- name: Install multiple packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - httpd
+    - mysql-server
+    - php
+```
+
+### `with_*`
+Ansible provides various `with_*` constructs for advanced loops.
+```yaml
+- name: Add users with passwords
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+  with_items:
+    - { name: 'john', password: 'password123' }
+    - { name: 'jane', password: 'password456' }
+```
+
+---
+
+## Ansible Modules
+- **`command`**: Executes a command.
+- **`script`**: Runs a script on remote hosts.
+- **`service`**: Manages services.
+- **Idempotency**: Ensures tasks have predictable outcomes.
+- **`lineinfile`**: Modifies lines in files.
+
+**Example:**
+```yaml
+- name: Add a line to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 localhost"
+```
+
+---
+
+## Ansible Plugins
+### What is a Plugin?
+Plugins are modules that extend Ansible functionality.
+
+### Key Plugins:
+- **Action Plugins**: Modify tasks.
+- **Callback Plugins**: Modify output.
+- **Lookup Plugins**: Retrieve data.
+
+---
+
+## Ansible Roles
+### Explain Roles
+Roles organize playbooks into reusable components.
+
+### Create Roles
+```bash
+ansible-galaxy init my_role
+```
+
+### Use Role
+```yaml
+- name: Use a role
+  hosts: all
+  roles:
+    - my_role
+```
+
+---
+
+## Ansible Collections
+Collections are a distribution format for Ansible content.
+
+### Benefits:
+- Modular content.
+- Easy sharing and reuse.
+
+---
+
+## Jinja2
+### Templating Engine
+Jinja2 is used for templating in Ansible.
+
+### Example:
+```yaml
+- name: Use Jinja2 template
+  template:
+    src: my_template.j2
+    dest: /etc/my_config.conf
+```
+
+---
+
+## Ansible Templates
+Templates allow dynamic configuration file generation.
+
+### Example:
+**Template (`my_template.j2`):**
+```j2
+server_name = {{ ansible_hostname }}
+```
+
+**Playbook:**
+```yaml
+- name: Deploy template
+  template:
+    src: my_template.j2
+    dest: /etc/server.conf
+```
+
+---
+
+## Ansible Install
+### Install Control Node on RedHat
+```bash
+yum install ansible
+```
+
+### Install via PIP
+```bash
+pip install ansible
+
