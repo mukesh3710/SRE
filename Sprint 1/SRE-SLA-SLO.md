@@ -1,121 +1,106 @@
 # Site Reliability Engineering: Service-Level Agreements and Objectives
 
-## Overview
+## Service-Level Indicators (SLIs)
 
-### Service-Level Indicators (SLIs)
-Learn how to create SLIs to measure the reliability of a system and make those measurements meaningful with SLOs.
-
-### Service-Level Objectives (SLOs)
-Understand how to document SLOs, set up dashboards and reporting, and ensure continuous improvement.
-
-### Error Budgets
-Discover how to create and use error budgets to manage poor service performance and its consequences.
-
-### Service-Level Agreements (SLAs)
-Gain insights into the main components of SLAs and how to set realistic performance expectations.
-
----
-
-## Prerequisites
-
-### High-Level Understanding of Software Development and Monitoring
-It is important to know how software is developed and monitored.
-
-### Basic Understanding of Microservices or Service-Oriented Architecture
-These concepts are foundational for the course.
-
-### Understanding of Client-Server Architecture
-This serves as a crucial base for the course content.
-
----
-
-## Core Concepts
-
-### 1. Service-Level Indicators (SLIs)
-
-#### Defining Reliability
+### Defining Reliability
 - **Service-Level Indicator (SLI):** A metric used to measure the level of service provided, typically expressed as a ratio of good events to total events.
-- **Understanding User Needs:** Identify user satisfaction metrics, including who the users are, their interactions, and critical tasks.
+- **Understanding User Needs:** Identify user behaviors, critical tasks, and satisfaction drivers by defining user personas and interactions.
+- **Selecting and Measuring SLIs:** Choose simple, relevant metrics like the ratio of successful HTTP requests to total requests. Continuously refine metrics for better alignment with user satisfaction and system performance.
 
-#### Selecting and Measuring SLIs
-- **Examples:** Ratio of successful HTTP requests to all HTTP requests.
-- **Implementation Options:** Application server logs, load balancer logs, black-box monitoring, and client-side instrumentation.
+### Implementing Measurements
+- **SLI Implementation:** Use application server logs, load balancer logs, black-box monitoring, or client-side instrumentation.
+- **Considerations:** Evaluate quality, coverage, and cost when selecting implementation methods.
+- **Iterative Improvement:** Begin with basic measurements and iteratively improve them over time.
 
-#### Common Measurements
-- **Request-Driven Systems:** Focus on availability, latency, and throughput.
-- **Big Data Systems:** Emphasize throughput and end-to-end latency.
-- **Storage Systems:** Key metrics include latency, availability, and durability.
+### Common Measurements
+- **Request-Driven Systems:** Measure availability, latency, and throughput to gauge user request handling.
+- **Big Data Systems:** Focus on throughput and end-to-end latency for data processing efficiency.
+- **Storage Systems:** Key SLIs include latency, availability, and durability to ensure data accessibility and integrity.
+- **Correctness:** Ensure all systems provide accurate data and responses.
 
-#### Measurement and Calculation
-- **User-Centric SLIs:** Metrics reflecting user happiness.
-- **Standardization:** Use templates for consistent measurements.
+### Measurement and Calculation
+- **User-Centric SLIs:** Focus on user-critical metrics, even if challenging to measure. Collaborate with product teams to define meaningful indicators.
+- **Metrics and Calculations:** Use tools like Prometheus for monitoring. Employ histograms and percentiles to analyze metrics distributions.
+- **Standardization:** Develop reusable templates for common metrics to ensure consistency across teams.
 
-#### Real-World Use Cases
-- Monitoring website uptime and page load times.
-- Measuring API request success rates for cloud services.
+## Service-Level Objectives (SLOs)
 
----
+### Objectives vs. Indicators
+- **Service-Level Objectives (SLOs):** Add thresholds and time windows to SLIs, enabling periodic evaluation.
+- **Importance of SLOs:** Define service-performance expectations to reduce complaints and avoid under- or over-utilization.
+- **Effectiveness of SLOs:** Ensure relevance to user satisfaction, defensibility, utility for decision-making, and ownership by actionable stakeholders.
 
-### 2. Service-Level Objectives (SLOs)
+### Making Measurements Meaningful
+- **Turning SLIs into SLOs:** Add a threshold (e.g., "90% of requests < 500ms") and a time window (e.g., "30 days").
+- **Choosing Time Windows:** Use rolling windows for real-time reflections and calendar-based windows for business alignment.
 
-#### Objectives vs. Indicators
-- **Service-Level Objectives (SLOs):** SLIs with thresholds and time windows.
-- **Effectiveness:** Relevant to user happiness, defensible, and actionable.
+### Stakeholder Agreement
+- **Buy-In:** Secure consensus from product managers, developers, and SREs.
+- **Threshold Agreement:** Ensure thresholds satisfy users and are achievable without excessive manual effort.
+- **Defensible SLOs:** Create achievable SLOs supported by production teams.
 
-#### Making Measurements Meaningful
-- **Example:** 90% of API requests taking fewer than 500ms over 30 days.
-- **Time Windows:** Rolling vs. calendar-based windows.
+### Documenting SLOs
+- **Centralized Documentation:** Maintain accessible, updateable documentation for all stakeholders.
+- **Essential Information:** Include authors, reviewers, approvers, approval dates, service descriptions, SLI details, thresholds, and time windows.
+- **Explanation and Error Budgets:** Provide rationale for SLI and SLO calculations and include error budget policies.
 
-#### Stakeholder Agreement
-- **Threshold Agreement:** Collaboration among stakeholders to set realistic thresholds.
+### Dashboards and Reporting
+- **Purpose:** Offer real-time SLO performance snapshots.
+- **Usefulness:** Identify trends, correlations, and problem areas.
+- **Examples:** Use dashboards for SLO compliance and SLI trends.
 
-#### Documenting SLOs
-- **Centralized Documentation:** Include authors, service descriptions, SLI implementations, and reasoning.
+### Continuous Improvement
+- **Gathering Data:** Use support tickets, social media sentiment, user interviews, and surveys to understand satisfaction.
+- **Adjusting SLOs:** Refine SLOs based on data, satisfaction levels, and workload requirements.
+- **Iterative Improvement:** Regularly revisit SLOs to ensure relevance and reduce toil.
 
-#### Dashboards and Reporting
-- **Purpose:** Point-in-time snapshots and trend analysis.
+## Error Budgets
 
-#### Continuous Improvement
-- Adjust SLOs based on user satisfaction and system performance.
+### Consequences of Poor Service Performance
+- **Error Budgets:** Define acceptable failure levels over a time frame.
+- **Incentives and Accountability:** Balance innovation and reliability through consequences for missing SLOs.
+- **Operational Impact:** Trigger stability-focused actions, like halting releases, when budgets are depleted.
 
-#### Real-World Use Cases
-- Setting thresholds for acceptable response times for e-commerce platforms.
-- Creating uptime goals for SaaS applications.
+### Creating an Error Budget
+- **Definition and Calculation:** Subtract the SLO threshold from one to define acceptable failure levels.
+- **Stakeholder Approval:** Gain consensus from product, SRE, and engineering teams.
+- **Adjustments:** Relax or tighten thresholds based on feasibility and impact.
 
----
+### Drafting an Error Budget Policy
+- **Enforce the Budget:** Take corrective actions when budgets are exhausted.
+- **Policy Content:** Include documentation details, service descriptions, and escalation paths.
+- **Action Plan:** Specify roles and responsibilities for restoring system stability.
 
-### 3. Error Budgets
+## Service-Level Agreements (SLAs)
 
-#### Consequences of Poor Service Performance
-- **Error Budgets:** Define acceptable levels of failure.
-- **Incentives:** Balance innovation and reliability.
+### Definition and Purpose
+- **Service-Level Agreements (SLAs):** Contracts with users outlining SLO consequences, often with financial penalties for violations.
+- **Role of Business and Legal Teams:** These teams handle SLAs, ensuring alignment with business goals and legal compliance.
+- **SLA vs. SLO:** SLAs are lenient, covering fewer metrics with broader thresholds.
 
-#### Creating an Error Budget
-- **Calculation:** SLO threshold subtracted from 1.
-- **Stakeholder Approval:** Collaboration among SREs, product engineers, and managers.
+### Components of Agreements
+- **Summary:** Overview of the product or feature and success metrics.
+- **Goals:** Measurable and achievable goals aligned with user needs.
+- **Consequences:** Specify financial penalties or other outcomes for SLA violations.
+- **Points of Contact:** Identify responsible parties and escalation paths.
+- **Conditions of Cancellation:** Define conditions for SLA invalidation.
 
-#### Drafting an Error Budget Policy
-- **Policy Content:** Include action plans and escalation paths.
+## Real-World Use Cases
 
-#### Real-World Use Cases
-- Allocating downtime for system maintenance in cloud services.
-- Restricting new feature releases when stability goals are not met.
+1. **E-commerce Platform:**
+   - **SLI Example:** Measure successful payment transactions vs. total payment attempts.
+   - **SLO Example:** 99.9% of payments processed within 1 second over 30 days.
+   - **Error Budget:** Allow a 0.1% failure rate, halting new feature deployments if exceeded.
+   - **SLA Example:** Refund customers for downtime exceeding 99.5% uptime.
 
----
+2. **Streaming Service:**
+   - **SLI Example:** Measure video playback starts without buffering.
+   - **SLO Example:** 95% of videos start within 3 seconds in a rolling 7-day window.
+   - **Error Budget:** Use budget breaches to prioritize stability-focused engineering.
+   - **SLA Example:** Provide service credits for significant buffering issues.
 
-### 4. Service-Level Agreements (SLAs)
-
-#### Definition and Purpose
-- **Service-Level Agreements (SLAs):** Contracts outlining performance expectations and consequences.
-
-#### Components of Agreements
-- **Key Elements:** Summary, goals, consequences, points of contact, and cancellation conditions.
-
-#### Real-World Use Cases
-- Negotiating uptime guarantees with enterprise clients.
-- Providing financial refunds for missed availability targets in hosting services.
-
----
-
-## Conclusion
-By understanding and implementing SLIs, SLOs, error budgets, and SLAs, organizations can effectively measure and ensure the reliability of their services. Continuous improvement and stakeholder collaboration are key to success.
+3. **Cloud Storage Provider:**
+   - **SLI Example:** Measure data retrieval latency and durability.
+   - **SLO Example:** 99.999% durability and retrieval within 100ms for 98% of requests over 90 days.
+   - **Error Budget:** Limit innovation projects if reliability dips below thresholds.
+   - **SLA Example:** Financial compensation for data loss or significant delays.
