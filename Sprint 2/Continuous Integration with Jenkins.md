@@ -1,4 +1,4 @@
-# Key Notes on Continuous Integration with Jenkins
+# Continuous Integration with Jenkins
 
 ## 1. Introduction to CI
 - **Definition**: Continuous Integration (CI) involves frequent integration of code by team members, verified by automated builds and tests.
