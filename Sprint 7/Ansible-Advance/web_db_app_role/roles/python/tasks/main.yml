@@ -1,0 +1,12 @@
+---
+# Install Python dependencies
+- name: Install Python dependencies
+  apt: 
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python
+    - python-setuptools
+    - python-dev
+    - build-essential
+    - python-pip
