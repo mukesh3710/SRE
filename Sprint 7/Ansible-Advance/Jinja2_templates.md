@@ -201,7 +201,7 @@ Steps:
 
 Example:
 
-# File: nginx.conf.j2
+### File: nginx.conf.j2
 server {
     listen {{ port }};
     server_name {{ server_name }};
@@ -225,7 +225,7 @@ tasks:
       server_name: example.com
       backend_server: 127.0.0.1
 
-2. Creating Custom Jinja2 Filters
+# Creating Custom Jinja2 Filters
 
 Custom filters extend Jinja2 functionality by allowing you to define your own operations.
 Steps:
@@ -241,12 +241,13 @@ Steps:
 
 Example:
 
-# File: custom_filters.py
+### File: custom_filters.py
 def reverse_string(value):
     """Reverses a string."""
     return value[::-1]
 
-# Register the filter
+
+## Register the filter
 from jinja2 import Environment
 
 env = Environment()
@@ -260,7 +261,7 @@ Output:
 
 "olleh"
 
-3. Using Custom Filters in Ansible
+# Using Custom Filters in Ansible
 
 Custom Jinja2 filters in Ansible can be added as part of a custom Python module.
 Steps:
@@ -270,7 +271,7 @@ Steps:
 
     Define the Filter:
 
-# File: filter_plugins/custom_filters.py
+### File: filter_plugins/custom_filters.py
 def reverse_string(value):
     return value[::-1]
 
