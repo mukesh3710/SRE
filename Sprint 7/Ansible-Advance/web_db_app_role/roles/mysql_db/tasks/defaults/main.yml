@@ -1,0 +1,4 @@
+# Example for mysql_db
+db_name: default_db
+db_user: default_user
+db_password: default_pass
