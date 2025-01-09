@@ -95,7 +95,7 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
 
 ## Jinja2 Templates
 
-### 1. Generating Configuration Files
+### Generating Configuration Files
 - **Purpose**: Customize configuration files dynamically using templates.
 - **Example**: Template file `nginx.conf.j2`
   ```jinja2
@@ -114,7 +114,7 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
         dest: /etc/nginx/nginx.conf
   ```
 
-### 2. Conditional Logic
+### Conditional Logic
 - **Purpose**: Add logic to handle different configurations.
 - **Example**:
   ```jinja2
@@ -124,7 +124,7 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
   {% endif %}
   ```
 
-### 3. Loops in Templates
+### Loops in Templates
 - **Purpose**: Render repetitive sections dynamically.
 - **Example**:
   ```jinja2
@@ -139,7 +139,7 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
 
 ## Real-World Scenarios for Linux Admins
 
-### 1. Automating `/etc/hosts` File
+### Automating `/etc/hosts` File
 - **Template**: `hosts.j2`
   ```jinja2
   {% for host, ip in host_mapping.items() %}
@@ -161,7 +161,7 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
         dest: /etc/hosts
   ```
 
-### 2. Generating User Configuration
+### Generating User Configuration
 - **Template**: `user_config.j2`
   ```jinja2
   {% for user in users %}
