@@ -34,10 +34,7 @@ Error handling is crucial in Ansible playbooks to ensure robustness and prevent 
 - Use Cases:
         Implement rollback mechanisms to undo changes made by previous tasks in the block if an error occurs.
         Perform alternative actions in case of unexpected failures.
-    Example:
-
-YAML
-
+```yaml
 - block:
     - name: Create a directory
       file:
@@ -54,17 +51,15 @@ YAML
       file:
         path: /tmp/test_dir
         state: absent
+```
 
-4. handlers:
+## handlers:
 
-    Purpose: Define actions to be executed in response to specific events, such as task failures.
-    Use Cases:
+- Purpose: Define actions to be executed in response to specific events, such as task failures.
+- Use Cases:
         Send notifications (e.g., email, Slack) about task failures.
         Restart services after updates or configuration changes.
-    Example:
-
-YAML
-
+```yaml
 - name: Restart service on failure
   handlers:
     - name: restart_service
@@ -77,29 +72,28 @@ YAML
     src: my_config.conf
     dest: /etc/my_service/
   notify: restart_service 
+```
 
-5. retries and delay:
+## retries and delay:
 
-    Purpose: Retry a task a specified number of times with a delay between attempts.
-    Use Cases:
+- Purpose: Retry a task a specified number of times with a delay between attempts.
+- Use Cases:
         Handle temporary network issues or transient errors.
         Increase the likelihood of success for tasks that may occasionally fail due to external factors.
-    Example:
-
-YAML
-
+```yaml
 - name: Run a command with retries
   shell: /path/to/command
   retries: 3
   delay: 5 
+```
 
-Choosing the Right Error Handling Technique:
+---
+# Choosing the Right Error Handling Technique:
 
 The appropriate error handling technique depends on the specific requirements of your playbook and the nature of the tasks involved. Consider the following factors:
-
-    Severity of the error: Should the playbook stop completely, or can it continue with some tasks failing?
-    Impact of the error: What are the potential consequences of the error, and how can they be mitigated?
-    Frequency of the error: How often is the error likely to occur?
+- Severity of the error: Should the playbook stop completely, or can it continue with some tasks failing?
+- Impact of the error: What are the potential consequences of the error, and how can they be mitigated?
+- Frequency of the error: How often is the error likely to occur?
 
 By carefully selecting and implementing error handling techniques, you can create more robust and reliable Ansible playbooks that can gracefully handle unexpected situations.
 
