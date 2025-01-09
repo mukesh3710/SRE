@@ -184,3 +184,122 @@ Jinja2 is a powerful templating engine that is integral to Ansible for generatin
       groups: []
   ```
 
+---
+
+# Creating Custom Jinja2 Templates
+
+Templates are files that contain static text and placeholders for dynamic content, using Jinja2 syntax. To create a custom template:
+Steps:
+
+    Create a .j2 Template File:
+        Save a file with the .j2 extension, e.g., my_config.j2.
+
+    Use Jinja2 Syntax:
+        Variables: Insert placeholders using {{ variable_name }}.
+        Loops: Use {% for item in list %} ... {% endfor %}.
+        Conditionals: Use {% if condition %} ... {% endif %}.
+
+Example:
+
+# File: nginx.conf.j2
+server {
+    listen {{ port }};
+    server_name {{ server_name }};
+
+    location / {
+        proxy_pass http://{{ backend_server }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+Using the Template in Ansible:
+
+tasks:
+  - name: Generate Nginx configuration
+    template:
+      src: templates/nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
+    vars:
+      port: 80
+      server_name: example.com
+      backend_server: 127.0.0.1
+
+2. Creating Custom Jinja2 Filters
+
+Custom filters extend Jinja2 functionality by allowing you to define your own operations.
+Steps:
+
+    Write a Python Function:
+        Define a Python function to perform your custom operation.
+
+    Register the Filter in Jinja2:
+        Use the Environment class to register your filter.
+
+    Use the Filter in Templates:
+        Apply your filter using the | operator.
+
+Example:
+
+# File: custom_filters.py
+def reverse_string(value):
+    """Reverses a string."""
+    return value[::-1]
+
+# Register the filter
+from jinja2 import Environment
+
+env = Environment()
+env.filters['reverse'] = reverse_string
+
+Template Usage:
+
+{{ "hello" | reverse }}
+
+Output:
+
+"olleh"
+
+3. Using Custom Filters in Ansible
+
+Custom Jinja2 filters in Ansible can be added as part of a custom Python module.
+Steps:
+
+    Create a Filter Plugin:
+        Save the custom filter in a Python file inside the filter_plugins/ directory of your role.
+
+    Define the Filter:
+
+# File: filter_plugins/custom_filters.py
+def reverse_string(value):
+    return value[::-1]
+
+class FilterModule(object):
+    def filters(self):
+        return {
+            'reverse': reverse_string
+        }
+
+Use the Filter in a Playbook or Role:
+
+tasks:
+  - debug:
+      msg: "{{ 'hello' | reverse }}"
+
+Run the Playbook:
+
+    ansible-playbook your_playbook.yml
+
+Output:
+
+"olleh"
+
+Best Practices
+
+    Naming: Use descriptive names for filters to avoid conflicts.
+    Testing: Test filters locally using a simple Python script.
+    Documentation: Document your custom filters and templates for team members.
+    Version Control: Store filters in filter_plugins/ for easy reuse and versioning.
+
+Would you like to explore specific use cases or need additional guidance on setting up filters?
+
