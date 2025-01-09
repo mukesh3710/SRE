@@ -1,0 +1,12 @@
+---
+- name: Configure Database Server
+  hosts: db_server
+  roles:
+    - python
+    - mysql_db
+
+- name: Deploy Web Application
+  hosts: web_server
+  roles:
+    - python
+    - flask_web
