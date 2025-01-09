@@ -29,7 +29,7 @@ This repository contains an Ansible-based solution for deploying a web applicati
 ## How to Use
 
 1. **Set Up Inventory**  
-   Ensure the inventory file includes a group `db_and_web_server` pointing to the target hosts.
+   Ensure the inventory file includes a group `db_and_web_server` pointing to the target hosts or we can put this details in host varibales file 
 
    Example:
    ```ini
@@ -49,5 +49,11 @@ This repository contains an Ansible-based solution for deploying a web applicati
    - Modular Design: Tasks are organized into reusable and manageable files.
    - Host-Specific Variables: All host-specific details are stored separately for scalability.
    - Ease of Use: Simply execute the main playbook to deploy the entire application.
+
+---
+
+## Notes
+   - Use ansible-vault for securing sensitive variables, such as database passwords.
+   - Ensure Python, Ansible, and necessary plugins are installed on the control node.
 
    
