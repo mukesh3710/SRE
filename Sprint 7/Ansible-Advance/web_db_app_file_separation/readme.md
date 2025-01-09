@@ -4,7 +4,7 @@ This repository contains an Ansible-based solution for deploying a web applicati
 
 ## Repository Structure
 
-- **`host_vars/db_and_web_server.yml`**: Contains host-specific variables such as database name, user, and password.
+- **`host_vars/db_and_web_server.yml`**: Contains host-specific variables such as IP, ssh password, database name, user, and password.
 - **`tasks/deploy_db.yml`**: Includes tasks for setting up and configuring the database.
 - **`tasks/deploy_web.yml`**: Includes tasks for setting up and deploying the web application.
 - **`main_playbook.yml`**: The main playbook that installs dependencies and includes the modular task files.
