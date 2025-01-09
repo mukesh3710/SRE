@@ -125,3 +125,7 @@ project/
 │   │       └── main.yml
 └── main_playbook.yml
 ```
+---
+
+## Other Files
+- roles/<role_name>/defaults/main.yml : Contains default variables for the role.
