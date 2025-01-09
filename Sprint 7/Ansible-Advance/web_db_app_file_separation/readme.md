@@ -35,3 +35,19 @@ This repository contains an Ansible-based solution for deploying a web applicati
    ```ini
    [db_and_web_server]
    server1 ansible_host=192.168.1.10
+   ```
+
+2. **Run the Main Playbook**
+   Execute the playbook.yml to deploy the application
+   ```bash
+   ansible-playbook playbook.yml
+   ```
+
+---
+
+## Key Features
+   - Modular Design: Tasks are organized into reusable and manageable files.
+   - Host-Specific Variables: All host-specific details are stored separately for scalability.
+   - Ease of Use: Simply execute the main playbook to deploy the entire application.
+
+   
